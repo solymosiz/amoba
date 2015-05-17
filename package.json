@@ -1,0 +1,26 @@
+{
+  "name": "amoba",
+  "version": "1.0.0",
+  "description": "amőba",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solymosiz/amoba.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/solymosiz/amoba/issues"
+  },
+  "homepage": "https://github.com/solymosiz/amoba",
+  "dependencies": {
+    "express": "^4.12.3"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.5"
+  }
+}
