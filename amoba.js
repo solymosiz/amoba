@@ -33,7 +33,15 @@ Amoba.prototype = {
 			
 				var td = document.createElement('td');
 				tr.appendChild(td);
-				td.innerHTML = this.__get(j,i);
+				td.innerHTML = this.get(j,i);
+				
+				var self = this;
+				(function(koord){
+    				td.addEventListener("click",function(){
+    				    self.putHere(koord.x,koord.y);
+    				    self.drawMap(place);
+    				});
+				})({x:j,y:i});
 			}
 		}
 	
