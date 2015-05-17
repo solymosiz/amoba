@@ -1,0 +1,19 @@
+<!DOCTYPE html> 
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8">
+        <title>Amőba</title>
+    </head>
+    <body>
+        <div id="game"></div>
+        <script src="./amoba.js"></script>
+        <script>
+            window.addEventListener('load',function(){
+                amoba = new Amoba();
+                amoba.newGame(5);
+                amoba.drawMap(document.getElementById("game"));
+            });
+           
+        </script>
+    </body>
+</html>
