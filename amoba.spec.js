@@ -1,28 +1,22 @@
 var expect = require('chai').expect;
-var Amoba = require('./Amoba');
+var Amoba = require('./amoba.js');
+
+var amoba = new Amoba();
 
 describe('Amoba', function() {
 
-  /*describe('#add', function() {
-    [
-      {
-        it: 'should return 0 if empty string given',
-        inputExpression: '',
-        expect: 0
-      },
-      {
-        it: 'should return the number if a single number given',
-        inputExpression: '1',
-        expect: 1
-      },
-    ].forEach(function(testCase) {
-        it(testCase.it, function() {
-          var stringCalculator = new StringCalculator();
-          var result = stringCalculator.add(testCase.inputExpression);
-          expect(result).to.eql(testCase.expect);
-        });
-      });
-
-  });*/
+  beforeEach('Alap pálya létrehozása', function(done){
+    amoba.newGame(10);
+    done();
+  });
+  
+  describe('#putHere', function() {
+    it('ha elhelyezek egy X-et 3,3-ra, akkor legyen is ott', function() {
+        amoba.putHere(3,3);
+      
+        var result = amoba.map[3][3];
+        expect(result).to.eql("X");
+    });
+  });
 
 });

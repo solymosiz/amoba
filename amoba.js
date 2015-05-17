@@ -7,15 +7,11 @@ Amoba.prototype = {
         this.__inicMap(size);
     },
     
-    __createMap : function(size){
-        
-    },
-    
     __inicMap : function(size){
         for (var j = 0; j < size; ++j){
         	this.map[j] = [];
 			for (var i = 0; i < size; ++i){
-				this.map[j][i] = "0";
+				this.map[j][i] = 0;
 			}
 		}
     },
@@ -34,7 +30,7 @@ Amoba.prototype = {
 			
 				var td = document.createElement('td');
 				tr.appendChild(td);
-				td.innerHTML = "0";
+				td.innerHTML = this.map[j][i];
 			}
 		}
 	
@@ -44,6 +40,11 @@ Amoba.prototype = {
     
     getSize : function(){
     	return this.map.length;
+    },
+    
+    putHere : function(x, y){
+    	this.map[x][y] = "X";
     }
 };
 
+module.exports = Amoba;
