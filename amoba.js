@@ -2,6 +2,9 @@ var Amoba = function() {};
 
 Amoba.prototype = {
     map : [],
+    ENEMY_SYMBOL : 2,
+    PLAYER_SYMBOL : 1,
+    NOTHING_SYMBOL : 0,
     
     newGame : function(size){
         this.__inicMap(size);
@@ -11,7 +14,7 @@ Amoba.prototype = {
         for (var j = 0; j < size; ++j){
         	this.map[j] = [];
 			for (var i = 0; i < size; ++i){
-				this.map[j][i] = 0;
+				this.map[j][i] = this.NOTHING_SYMBOL;
 			}
 		}
     },
@@ -30,7 +33,7 @@ Amoba.prototype = {
 			
 				var td = document.createElement('td');
 				tr.appendChild(td);
-				td.innerHTML = this.map[j][i];
+				td.innerHTML = this.__get(j,i);
 			}
 		}
 	
@@ -43,7 +46,32 @@ Amoba.prototype = {
     },
     
     putHere : function(x, y){
-    	this.map[x][y] = "X";
+    	this.__put(x,y,this.PLAYER_SYMBOL);
+    	this.enemyTurn();
+    },
+    
+    enemyTurn : function(){
+    	for (var i = 0; i < this.getSize(); i++){
+          for (var j = 0; j < this.getSize(); j++){
+            if (this.__isEmpty(j,i)) return this.__enemyPutHere(j,i);
+          }
+        }
+    },
+    
+    get : function(x,y){
+    	return this.map[x][y];
+    },
+    
+    __isEmpty : function(x,y){
+    	return this.get(x,y)==this.NOTHING_SYMBOL;
+    },
+    
+    __enemyPutHere : function(x,y){
+        this.__put(x,y,this.ENEMY_SYMBOL);
+    },
+    
+    __put : function(x,y,symbol){
+        this.map[x][y] = symbol;
     }
 };
 
