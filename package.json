@@ -1,6 +1,6 @@
 {
   "name": "amoba",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "amőba",
   "main": "index.html",
   "scripts": {
@@ -14,12 +14,12 @@
     "test": "./node_modules/mocha/bin/mocha ./",
     "start": "node amoba.js"
   },
-  "author": "",
+  "author": "Solymosi Zoltán",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/solymosiz/amoba/issues"
   },
-  "homepage": "https://github.com/solymosiz/amoba",
+  "homepage": "https://github.com/solymosiz/amoba/",
   "dependencies": {
     "express": "^4.12.3"
   },

@@ -34,6 +34,18 @@ describe('Amoba', function() {
     });
   });
   
+  describe('#putHere', function() {
+    it('Nem rakhatja a játékos már foglalt területre a szimbólumát, itt [2,2] adja vissza az ellenfél szimnbólumát', function() {
+      
+        amoba.__put(2,2,amoba.ENEMY_SYMBOL);
+        amoba.putHere(2,2);
+        
+        var result = amoba.get(2,2);
+        
+        expect(result).to.eql(amoba.ENEMY_SYMBOL);
+    });
+  });
+  
   describe('#enemyTurn', function() {
     it('ha már léptem, szeretném ha az ellenfél is lépne', function() {
         amoba.putHere(3,3);
@@ -56,14 +68,214 @@ describe('Amoba', function() {
           }
         }
         amoba.__put(4,6,amoba.NOTHING_SYMBOL);
-        amoba.__put(3,3,amoba.NOTHING_SYMBOL);
-        amoba.putHere(3,3);
+        amoba.enemyTurn();
         
         var result = amoba.get(4,6);
-        
         expect(result).to.eql(amoba.ENEMY_SYMBOL);
     });
   });
+  
+  describe('#__getMaxNumberOfSameSymbolRightDirection', function() {
+    it('5 elem van vízszintesen egymás mellett', function() {
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(2,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(2,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,4,amoba.PLAYER_SYMBOL);
+        var result = amoba.__getMaxNumberOfSameSymbolRightDirection(amoba.PLAYER_SYMBOL);
+        expect(result).to.eql(5);
+    });
+  });
+  
+  describe('#__getMaxNumberOfSameSymbolRightDirection', function() {
+    it('4 elem van egymás mellett', function() {
+      
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(2,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(8,3,amoba.PLAYER_SYMBOL);
+        
+        
+        var result = amoba.__getMaxNumberOfSameSymbolRightDirection(amoba.PLAYER_SYMBOL);
+        
+        expect(result).to.eql(4);
+    });
+  });
+  
+  describe('#__getMaxNumberOfSameSymbolBottomDirection', function() {
+    it('7 elem van egymás alatt', function() {
+      
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,7,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,8,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,9,amoba.PLAYER_SYMBOL);
+        
+        amoba.__put(1,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(1,2,amoba.PLAYER_SYMBOL);
+        amoba.__put(1,1,amoba.PLAYER_SYMBOL);
+        
+        var result = amoba.__getMaxNumberOfSameSymbolBottomDirection(amoba.PLAYER_SYMBOL);
+        
+        expect(result).to.eql(7);
+    });
+  });
+  
+  describe('#__getMaxNumberOfSameSymbolBottomDirection', function() {
+    it('5 elem van jobb átlósan', function() {
+      
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(7,7,amoba.PLAYER_SYMBOL);
+        
+        amoba.__put(3,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,6,amoba.PLAYER_SYMBOL);
+        
+        amoba.__put(2,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,5,amoba.PLAYER_SYMBOL);
+        
+        
+        var result = amoba.__getMaxNumberOfSameSymbolBottomRightDirection(amoba.PLAYER_SYMBOL);
+        
+        expect(result).to.eql(5);
+    });
+  });
+  
+  describe('#__getMaxNumberOfSameSymbolBottomDirection', function() {
+    it('2 elem van bal átlósan', function() {
+      
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(7,7,amoba.PLAYER_SYMBOL);
+        
+        amoba.__put(3,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,6,amoba.PLAYER_SYMBOL);
+        
+        amoba.__put(2,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,5,amoba.PLAYER_SYMBOL);
+        
+        
+        var result = amoba.__getMaxNumberOfSameSymbolBottomLeftDirection(amoba.PLAYER_SYMBOL);
+        
+        expect(result).to.eql(2);
+    });
+  });
+  
+  describe('#__getMaxNumberOfSameSymbolBottomDirection', function() {
+    it('5 a legtöbb elem ha minden irányba keresünk', function() {
+      
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(7,7,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(2,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(2,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(8,3,amoba.PLAYER_SYMBOL);
+        
+        var result = amoba.__getMaxNumberOfSameSymbolInAllDirection(amoba.PLAYER_SYMBOL);
+        
+        expect(result).to.eql(5);
+    });
+  });
+  
+  describe('#isPlayerWon', function() {
+    it('játékos nyer és az ellenfél veszít', function() {
+      
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(7,7,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(2,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,5,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(5,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(6,3,amoba.PLAYER_SYMBOL);
+        amoba.__put(3,6,amoba.PLAYER_SYMBOL);
+        amoba.__put(2,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(8,3,amoba.PLAYER_SYMBOL);
+        
+        var result = { player:amoba.isPlayerWon(), enemy:amoba.isEnemyWon() }
+        
+        expect(result).to.eql({player:true, enemy:false});
+    });
+  });
+  
+  describe('#isPlayerWon', function() {
+    it('játékos veszít, ellenfél nyer', function() {
+      
+        amoba.__put(3,3,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,4,amoba.ENEMY_SYMBOL);
+        amoba.__put(5,5,amoba.ENEMY_SYMBOL);
+        amoba.__put(6,6,amoba.ENEMY_SYMBOL);
+        amoba.__put(7,7,amoba.ENEMY_SYMBOL);
+        amoba.__put(3,5,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,6,amoba.ENEMY_SYMBOL);
+        amoba.__put(2,3,amoba.ENEMY_SYMBOL);
+        amoba.__put(3,4,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,5,amoba.ENEMY_SYMBOL);
+        amoba.__put(3,3,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,3,amoba.ENEMY_SYMBOL);
+        amoba.__put(5,3,amoba.ENEMY_SYMBOL);
+        amoba.__put(6,3,amoba.ENEMY_SYMBOL);
+        amoba.__put(3,6,amoba.ENEMY_SYMBOL);
+        amoba.__put(2,4,amoba.ENEMY_SYMBOL);
+        amoba.__put(8,3,amoba.ENEMY_SYMBOL);
+        
+        var result = { player:amoba.isPlayerWon(), enemy:amoba.isEnemyWon() }
+        
+        expect(result).to.eql({player:false, enemy:true});
+    });
+  });
+  
+  describe('#isPlayerWon', function() {
+    it('ebbe a pozícióba [8,8] üres helynek kell maradnia, mert a játék nem folytatódhat, mivel vége', function() {
+      
+        amoba.__put(3,3,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,4,amoba.ENEMY_SYMBOL);
+        amoba.__put(5,5,amoba.ENEMY_SYMBOL);
+        amoba.__put(6,6,amoba.ENEMY_SYMBOL);
+        amoba.__put(7,7,amoba.ENEMY_SYMBOL);
+        amoba.putHere(9,9);
+        
+        var result = amoba.get(9,9);
+        
+        expect(result).to.eql(amoba.NOTHING_SYMBOL);
+    });
+  });
+  
+  
+  
+  
 
 });
 
@@ -76,10 +288,10 @@ Az adott pont felteszi, hogy a felette lévő, már kész
 [x] Ellenfél: (1p)					        Felhasználóként szeretném, ha a gép is tenne le jeleket az ő körében, hogy ne magammal játszak.
 [x] Gép legális lépése: (1p)  	  	Felhasználóként szeretném, ha a gép csak üres mezőre tenne, hogy ne írja föl más korábbi lépését.
 ------------------------------ Innentől demózható, nagyon fontos funkciók jönnek, amik a játék szerves részei
-[ ] Játék vége: (3p)			        	Felhasználóként szeretném, ha megállna játék, mikor valaki 5 elemet elhelyezett egymás mellett, hogy ne folytatódjon, a szabály szerűen végzett meccs.
-[ ] Nyertes: (1p)				          	Felhasználóként szeretném, ha a játék jelezné, melyik játékos nyert, hogy átláthatatlan nagyságú pályán kiderüljön ki nyert.
-[ ] Új játék: (1p)				        	Felhasználóként szeretnék egy új játék gombot, hogy végzett játékot újra lehessen kezdeni.
-[ ] Jel legális elhelyezése: (2p) 	Felhasználóként szeretném, ha a jelemet csak üres helyre tehetném, hogy ne írjam fölül a korábbi saját vagy ellenfél lépését.
+[x] Játék vége: (3p)			        	Felhasználóként szeretném, ha megállna játék, mikor valaki 5 elemet elhelyezett egymás mellett, hogy ne folytatódjon, a szabály szerűen végzett meccs.
+[x] Nyertes: (1p)				          	Felhasználóként szeretném, ha a játék jelezné, melyik játékos nyert, hogy átláthatatlan nagyságú pályán kiderüljön ki nyert.
+[x] Új játék: (1p)				        	Felhasználóként szeretnék egy új játék gombot, hogy végzett játékot újra lehessen kezdeni.
+[x] Jel legális elhelyezése: (2p) 	Felhasználóként szeretném, ha a jelemet csak üres helyre tehetném, hogy ne írjam fölül a korábbi saját vagy ellenfél lépését.
 [ ] Gép nyerés érzékelése: (3p)	  	Felhasználóként szeretném, ha a gép észrevenné, hogy nyerésre állok, hogy megállítson a saját javára.
 [ ] Gép nyerni szeretne: (3p)	    	Felhasználóként szeretné, ha a gép megpróbálna törekedni arra, hogy megnyerje a játékot, hogy számomra nagyobb kihívást jelentsen.
 [ ] Játékmódok: (2p)			        	Felhasználóként szeretném, ha lehetne választani játék elején, hogy hány (3,4,5) jel szükséges a nyeréshez, hogy több módban is játszhassak.

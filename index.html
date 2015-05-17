@@ -3,17 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Amőba</title>
+        <link rel="stylesheet" type="text/css" href="css/mystyle.css">
     </head>
     <body>
         <div id="game"></div>
+        <div id="msg"></div>
+        <input type="button" value="Új játék" id="new_game_button" />
         <script src="./amoba.js"></script>
-        <script>
-            window.addEventListener('load',function(){
-                amoba = new Amoba();
-                amoba.newGame(5);
-                amoba.drawMap(document.getElementById("game"));
-            });
-           
-        </script>
+        <script src="./page_js/page.js"></script>
     </body>
 </html>
