@@ -1,11 +1,42 @@
-table{
-    border-collapse: collapse;
+body{
+    font-family:Arial;
 }
-table td{
-    border:1px solid black;
+
+#table{
+    border-collapse: collapse;
+    margin:10px auto;
+}
+#table td{
+    border:1px solid #666;
     width:20px;
     height:20px;
     text-align:center;
     vertical-align:middle;
     cursor:pointer;
+}
+#table{
+    background-color:#fff;
+}
+/*#table tr:nth-child(odd) td:nth-child(even), #map tr:nth-child(even) td:nth-child(odd) {
+	background: #093;
+}
+
+#table tr:nth-child(even) td:nth-child(odd), #map tr:nth-child(odd) td:nth-child(even) {
+	background: #093;
+}*/
+
+#msg{
+    margin:10px auto;
+    text-align: center;
+}
+#new_game_button{
+    margin:10px auto;
+    display:block;
+    width:100px;
+    height:35px;
+    padding:2px;
+    font-family:Arial;
+}
+
+#contener{
 }

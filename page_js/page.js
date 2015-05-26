@@ -2,10 +2,10 @@ window.addEventListener('load',init);
 
 function init(){
     var amoba = new Amoba();
-    amoba.newGame(10);
+    amoba.newGame(20);
     
     document.getElementById("new_game_button").addEventListener("click", function(){
-        amoba.newGame(10);
+        amoba.newGame(20);
         guiRefresh(amoba);
     });
     

@@ -28,8 +28,9 @@ describe('Amoba', function() {
   describe('#putHere', function() {
     it('ha elhelyezek egy X-et 3,3-ra, akkor legyen is ott', function() {
         amoba.putHere(3,3);
-      
+        
         var result = amoba.get(3,3);
+        
         expect(result).to.eql(amoba.PLAYER_SYMBOL);
     });
   });
@@ -273,6 +274,55 @@ describe('Amoba', function() {
     });
   });
   
+  describe('__isDirectionLooksLikeThis', function() {
+    it('megtalálja e 222120 maszkot', function() {
+      
+        amoba.__put(4,4,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,5,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,6,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,7,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,8,amoba.ENEMY_SYMBOL);
+        
+        var ene = amoba.ENEMY_SYMBOL+"";
+        var pla = amoba.PLAYER_SYMBOL+"";
+        var nul = amoba.NOTHING_SYMBOL+"";
+        var mask = ene+ene+ene+pla+ene+nul;
+        
+        var result = amoba.__isDirectionLooksLikeThis({x:4,y:4}, {x:0,y:1}, mask);
+        
+        expect(result).to.eql(true);
+    });
+  });
+  
+  describe('nyerés érzékelés', function() {
+    it('[4,4],[4,5],[4,6] helyen lesz szimbólum, az ellenfélnek két oldal valamelyikére kell raknia', function() {
+      
+        amoba.__put(4,4,amoba.PLAYER_SYMBOL);
+        amoba.__put(4,5,amoba.PLAYER_SYMBOL);
+        amoba.putHere(4,6);
+        
+        var result = amoba.get(4,3) == amoba.ENEMY_SYMBOL || amoba.get(4,7) == amoba.ENEMY_SYMBOL;
+        
+        expect(result).to.eql(true);
+    });
+  });
+  
+  describe('nyerés érzékelés', function() {
+    it('[4,4],[4,5],[4,6] helyen lesz ellenfél, az ellenfél nyerni szeretne, ezért ezt bővíti', function() {
+      
+        amoba.__put(4,4,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,5,amoba.ENEMY_SYMBOL);
+        amoba.__put(4,6,amoba.ENEMY_SYMBOL);
+        amoba.putHere(2,2);
+        
+        var result = amoba.get(4,3) == amoba.ENEMY_SYMBOL || amoba.get(4,7) == amoba.ENEMY_SYMBOL;
+        
+        expect(result).to.eql(true);
+    });
+  });
+  
+  
+  
   
   
   
@@ -292,8 +342,8 @@ Az adott pont felteszi, hogy a felette lévő, már kész
 [x] Nyertes: (1p)				          	Felhasználóként szeretném, ha a játék jelezné, melyik játékos nyert, hogy átláthatatlan nagyságú pályán kiderüljön ki nyert.
 [x] Új játék: (1p)				        	Felhasználóként szeretnék egy új játék gombot, hogy végzett játékot újra lehessen kezdeni.
 [x] Jel legális elhelyezése: (2p) 	Felhasználóként szeretném, ha a jelemet csak üres helyre tehetném, hogy ne írjam fölül a korábbi saját vagy ellenfél lépését.
-[ ] Gép nyerés érzékelése: (3p)	  	Felhasználóként szeretném, ha a gép észrevenné, hogy nyerésre állok, hogy megállítson a saját javára.
-[ ] Gép nyerni szeretne: (3p)	    	Felhasználóként szeretné, ha a gép megpróbálna törekedni arra, hogy megnyerje a játékot, hogy számomra nagyobb kihívást jelentsen.
+[x] Gép nyerés érzékelése: (3p)	  	Felhasználóként szeretném, ha a gép észrevenné, hogy nyerésre állok, hogy megállítson a saját javára.
+[x] Gép nyerni szeretne: (3p)	    	Felhasználóként szeretné, ha a gép megpróbálna törekedni arra, hogy megnyerje a játékot, hogy számomra nagyobb kihívást jelentsen.
 [ ] Játékmódok: (2p)			        	Felhasználóként szeretném, ha lehetne választani játék elején, hogy hány (3,4,5) jel szükséges a nyeréshez, hogy több módban is játszhassak.
 ------------------------------ A játék alapja kész, kényelmi, extra funkciók következnek
 [ ] Utolsó lépés láthatósága: (1p)	Felhasználóként szeretném, ha a gép utolsó lépése kiemelten jelenne meg, hogy tudjam mivel reagált az én lépésemre.
